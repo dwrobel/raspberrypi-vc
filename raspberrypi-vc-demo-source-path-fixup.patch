@@ -1,70 +1,70 @@
-diff -ur raspberrypi-userland-2fa36bf.orig/host_applications/linux/apps/hello_pi/hello_audio/audio.c raspberrypi-userland-2fa36bf/host_applications/linux/apps/hello_pi/hello_audio/audio.c
---- raspberrypi-userland-2fa36bf.orig/host_applications/linux/apps/hello_pi/hello_audio/audio.c	2014-08-08 15:48:27.000000000 +0100
-+++ raspberrypi-userland-2fa36bf/host_applications/linux/apps/hello_pi/hello_audio/audio.c	2015-03-08 11:14:43.518965889 +0000
+diff -ur raspberrypi-userland-8369e39.orig/host_applications/linux/apps/hello_pi/hello_audio/audio.c raspberrypi-userland-8369e39/host_applications/linux/apps/hello_pi/hello_audio/audio.c
+--- raspberrypi-userland-8369e39.orig/host_applications/linux/apps/hello_pi/hello_audio/audio.c	2014-08-08 15:48:27.000000000 +0100
++++ raspberrypi-userland-8369e39/host_applications/linux/apps/hello_pi/hello_audio/audio.c	2015-03-08 11:14:43.518965889 +0000
 @@ -34,7 +34,7 @@
  #include <unistd.h>
  #include <semaphore.h>
- 
+
 -#include "bcm_host.h"
 +#include <bcm_host.h>
  #include "ilclient.h"
- 
+
  #define N_WAVE          1024    /* dimension of Sinewave[] */
-diff -ur raspberrypi-userland-2fa36bf.orig/host_applications/linux/apps/hello_pi/hello_dispmanx/dispmanx.c raspberrypi-userland-2fa36bf/host_applications/linux/apps/hello_pi/hello_dispmanx/dispmanx.c
---- raspberrypi-userland-2fa36bf.orig/host_applications/linux/apps/hello_pi/hello_dispmanx/dispmanx.c	2014-08-08 15:48:27.000000000 +0100
-+++ raspberrypi-userland-2fa36bf/host_applications/linux/apps/hello_pi/hello_dispmanx/dispmanx.c	2015-03-08 11:14:43.518965889 +0000
+diff -ur raspberrypi-userland-8369e39.orig/host_applications/linux/apps/hello_pi/hello_dispmanx/dispmanx.c raspberrypi-userland-8369e39/host_applications/linux/apps/hello_pi/hello_dispmanx/dispmanx.c
+--- raspberrypi-userland-8369e39.orig/host_applications/linux/apps/hello_pi/hello_dispmanx/dispmanx.c	2014-08-08 15:48:27.000000000 +0100
++++ raspberrypi-userland-8369e39/host_applications/linux/apps/hello_pi/hello_dispmanx/dispmanx.c	2015-03-08 11:14:43.518965889 +0000
 @@ -34,7 +34,7 @@
  #include <unistd.h>
  #include <sys/time.h>
- 
+
 -#include "bcm_host.h"
 +#include <bcm_host.h>
- 
+
  #define WIDTH   200
  #define HEIGHT  200
-diff -ur raspberrypi-userland-2fa36bf.orig/host_applications/linux/apps/hello_pi/hello_encode/encode.c raspberrypi-userland-2fa36bf/host_applications/linux/apps/hello_pi/hello_encode/encode.c
---- raspberrypi-userland-2fa36bf.orig/host_applications/linux/apps/hello_pi/hello_encode/encode.c	2014-08-08 15:48:27.000000000 +0100
-+++ raspberrypi-userland-2fa36bf/host_applications/linux/apps/hello_pi/hello_encode/encode.c	2015-03-08 11:21:13.318328860 +0000
+diff -ur raspberrypi-userland-8369e39.orig/host_applications/linux/apps/hello_pi/hello_encode/encode.c raspberrypi-userland-8369e39/host_applications/linux/apps/hello_pi/hello_encode/encode.c
+--- raspberrypi-userland-8369e39.orig/host_applications/linux/apps/hello_pi/hello_encode/encode.c	2014-08-08 15:48:27.000000000 +0100
++++ raspberrypi-userland-8369e39/host_applications/linux/apps/hello_pi/hello_encode/encode.c	2015-03-08 11:21:13.318328860 +0000
 @@ -33,7 +33,7 @@
  #include <stdlib.h>
  #include <string.h>
- 
+
 -#include "bcm_host.h"
 +#include <bcm_host.h>
  #include "ilclient.h"
- 
+
  #define NUMFRAMES 300
-diff -ur raspberrypi-userland-2fa36bf.orig/host_applications/linux/apps/hello_pi/hello_font/main.c raspberrypi-userland-2fa36bf/host_applications/linux/apps/hello_pi/hello_font/main.c
---- raspberrypi-userland-2fa36bf.orig/host_applications/linux/apps/hello_pi/hello_font/main.c	2014-08-08 15:48:27.000000000 +0100
-+++ raspberrypi-userland-2fa36bf/host_applications/linux/apps/hello_pi/hello_font/main.c	2015-03-08 11:21:38.953944627 +0000
+diff -ur raspberrypi-userland-8369e39.orig/host_applications/linux/apps/hello_pi/hello_font/main.c raspberrypi-userland-8369e39/host_applications/linux/apps/hello_pi/hello_font/main.c
+--- raspberrypi-userland-8369e39.orig/host_applications/linux/apps/hello_pi/hello_font/main.c	2014-08-08 15:48:27.000000000 +0100
++++ raspberrypi-userland-8369e39/host_applications/linux/apps/hello_pi/hello_font/main.c	2015-03-08 11:21:38.953944627 +0000
 @@ -33,7 +33,7 @@
  #include <assert.h>
  #include <unistd.h>
- 
+
 -#include "bcm_host.h"
 +#include <bcm_host.h>
  #include "vgfont.h"
- 
+
  static const char *strnchr(const char *str, size_t len, char c)
-diff -ur raspberrypi-userland-2fa36bf.orig/host_applications/linux/apps/hello_pi/hello_jpeg/jpeg.h raspberrypi-userland-2fa36bf/host_applications/linux/apps/hello_pi/hello_jpeg/jpeg.h
---- raspberrypi-userland-2fa36bf.orig/host_applications/linux/apps/hello_pi/hello_jpeg/jpeg.h	2014-08-08 15:48:27.000000000 +0100
-+++ raspberrypi-userland-2fa36bf/host_applications/linux/apps/hello_pi/hello_jpeg/jpeg.h	2015-03-08 11:22:19.159910374 +0000
+diff -ur raspberrypi-userland-8369e39.orig/host_applications/linux/apps/hello_pi/hello_jpeg/jpeg.h raspberrypi-userland-8369e39/host_applications/linux/apps/hello_pi/hello_jpeg/jpeg.h
+--- raspberrypi-userland-8369e39.orig/host_applications/linux/apps/hello_pi/hello_jpeg/jpeg.h	2014-08-08 15:48:27.000000000 +0100
++++ raspberrypi-userland-8369e39/host_applications/linux/apps/hello_pi/hello_jpeg/jpeg.h	2015-03-08 11:22:19.159910374 +0000
 @@ -40,7 +40,7 @@
  #include <string.h>
  #include <errno.h>
- 
+
 -#include "bcm_host.h"
 +#include <bcm_host.h>
  #include "ilclient.h"
- 
+
  #define OMXJPEG_OK                  0
-diff -ur raspberrypi-userland-2fa36bf.orig/host_applications/linux/apps/hello_pi/hello_teapot/models.c raspberrypi-userland-2fa36bf/host_applications/linux/apps/hello_pi/hello_teapot/models.c
---- raspberrypi-userland-2fa36bf.orig/host_applications/linux/apps/hello_pi/hello_teapot/models.c	2014-08-08 15:48:27.000000000 +0100
-+++ raspberrypi-userland-2fa36bf/host_applications/linux/apps/hello_pi/hello_teapot/models.c	2015-03-08 11:27:36.987544586 +0000
+diff -ur raspberrypi-userland-8369e39.orig/host_applications/linux/apps/hello_pi/hello_teapot/models.c raspberrypi-userland-8369e39/host_applications/linux/apps/hello_pi/hello_teapot/models.c
+--- raspberrypi-userland-8369e39.orig/host_applications/linux/apps/hello_pi/hello_teapot/models.c	2014-08-08 15:48:27.000000000 +0100
++++ raspberrypi-userland-8369e39/host_applications/linux/apps/hello_pi/hello_teapot/models.c	2015-03-08 11:27:36.987544586 +0000
 @@ -29,9 +29,9 @@
  #include <stdio.h>
  #include <stdint.h>
- 
+
 -#include "GLES/gl.h"
 -#include "EGL/egl.h"
 -#include "EGL/eglext.h"
@@ -72,45 +72,45 @@ diff -ur raspberrypi-userland-2fa36bf.orig/host_applications/linux/apps/hello_pi
 +#include <EGL/egl.h>
 +#include <EGL/eglext.h>
  #include "models.h"
- 
+
  #define VMCS_RESOURCE(a,b) (b)
-diff -ur raspberrypi-userland-2fa36bf.orig/host_applications/linux/apps/hello_pi/hello_teapot/triangle.c raspberrypi-userland-2fa36bf/host_applications/linux/apps/hello_pi/hello_teapot/triangle.c
---- raspberrypi-userland-2fa36bf.orig/host_applications/linux/apps/hello_pi/hello_teapot/triangle.c	2014-08-08 15:48:27.000000000 +0100
-+++ raspberrypi-userland-2fa36bf/host_applications/linux/apps/hello_pi/hello_teapot/triangle.c	2015-03-08 11:27:10.751914406 +0000
+diff -ur raspberrypi-userland-8369e39.orig/host_applications/linux/apps/hello_pi/hello_teapot/triangle.c raspberrypi-userland-8369e39/host_applications/linux/apps/hello_pi/hello_teapot/triangle.c
+--- raspberrypi-userland-8369e39.orig/host_applications/linux/apps/hello_pi/hello_teapot/triangle.c	2014-08-08 15:48:27.000000000 +0100
++++ raspberrypi-userland-8369e39/host_applications/linux/apps/hello_pi/hello_teapot/triangle.c	2015-03-08 11:27:10.751914406 +0000
 @@ -35,11 +35,11 @@
  #include <assert.h>
  #include <unistd.h>
- 
+
 -#include "bcm_host.h"
 +#include <bcm_host.h>
- 
+
 -#include "GLES/gl.h"
 -#include "EGL/egl.h"
 -#include "EGL/eglext.h"
 +#include <GLES/gl.h>
 +#include <EGL/egl.h>
 +#include <EGL/eglext.h>
- 
+
  #include "cube_texture_and_coords.h"
  #include "models.h"
-diff -ur raspberrypi-userland-2fa36bf.orig/host_applications/linux/apps/hello_pi/hello_teapot/video.c raspberrypi-userland-2fa36bf/host_applications/linux/apps/hello_pi/hello_teapot/video.c
---- raspberrypi-userland-2fa36bf.orig/host_applications/linux/apps/hello_pi/hello_teapot/video.c	2014-08-08 15:48:27.000000000 +0100
-+++ raspberrypi-userland-2fa36bf/host_applications/linux/apps/hello_pi/hello_teapot/video.c	2015-03-08 11:22:40.915432941 +0000
+diff -ur raspberrypi-userland-8369e39.orig/host_applications/linux/apps/hello_pi/hello_teapot/video.c raspberrypi-userland-8369e39/host_applications/linux/apps/hello_pi/hello_teapot/video.c
+--- raspberrypi-userland-8369e39.orig/host_applications/linux/apps/hello_pi/hello_teapot/video.c	2014-08-08 15:48:27.000000000 +0100
++++ raspberrypi-userland-8369e39/host_applications/linux/apps/hello_pi/hello_teapot/video.c	2015-03-08 11:22:40.915432941 +0000
 @@ -32,7 +32,7 @@
  #include <stdlib.h>
  #include <string.h>
- 
+
 -#include "bcm_host.h"
 +#include <bcm_host.h>
  #include "ilclient.h"
- 
+
  static OMX_BUFFERHEADERTYPE* eglBuffer = NULL;
-diff -ur raspberrypi-userland-2fa36bf.orig/host_applications/linux/apps/hello_pi/hello_tiger/main.c raspberrypi-userland-2fa36bf/host_applications/linux/apps/hello_pi/hello_tiger/main.c
---- raspberrypi-userland-2fa36bf.orig/host_applications/linux/apps/hello_pi/hello_tiger/main.c	2014-08-08 15:48:27.000000000 +0100
-+++ raspberrypi-userland-2fa36bf/host_applications/linux/apps/hello_pi/hello_tiger/main.c	2015-03-08 11:28:31.458852985 +0000
+diff -ur raspberrypi-userland-8369e39.orig/host_applications/linux/apps/hello_pi/hello_tiger/main.c raspberrypi-userland-8369e39/host_applications/linux/apps/hello_pi/hello_tiger/main.c
+--- raspberrypi-userland-8369e39.orig/host_applications/linux/apps/hello_pi/hello_tiger/main.c	2014-08-08 15:48:27.000000000 +0100
++++ raspberrypi-userland-8369e39/host_applications/linux/apps/hello_pi/hello_tiger/main.c	2015-03-08 11:28:31.458852985 +0000
 @@ -41,13 +41,13 @@
  #define UNREF(X) ((void)(X))
- 
+
  #ifdef HG_FLAT_INCLUDES
 -#	include "openvg.h"
 -#	include "vgu.h"
@@ -126,159 +126,159 @@ diff -ur raspberrypi-userland-2fa36bf.orig/host_applications/linux/apps/hello_pi
 +#	include <VG/vgu.h>
 +#	include <EGL/egl.h>
  #endif
- 
+
  #include "tiger.h"
 @@ -479,7 +479,7 @@
  //TODO
- 
+
  #elif defined __RASPBERRYPI__
 -#include "bcm_host.h"
 +#include <bcm_host.h>
  int main(void)
  {
     uint32_t width, height;
-diff -ur raspberrypi-userland-2fa36bf.orig/host_applications/linux/apps/hello_pi/hello_triangle/triangle.c raspberrypi-userland-2fa36bf/host_applications/linux/apps/hello_pi/hello_triangle/triangle.c
---- raspberrypi-userland-2fa36bf.orig/host_applications/linux/apps/hello_pi/hello_triangle/triangle.c	2014-08-08 15:48:27.000000000 +0100
-+++ raspberrypi-userland-2fa36bf/host_applications/linux/apps/hello_pi/hello_triangle/triangle.c	2015-03-08 11:29:00.839558709 +0000
+diff -ur raspberrypi-userland-8369e39.orig/host_applications/linux/apps/hello_pi/hello_triangle/triangle.c raspberrypi-userland-8369e39/host_applications/linux/apps/hello_pi/hello_triangle/triangle.c
+--- raspberrypi-userland-8369e39.orig/host_applications/linux/apps/hello_pi/hello_triangle/triangle.c	2014-08-08 15:48:27.000000000 +0100
++++ raspberrypi-userland-8369e39/host_applications/linux/apps/hello_pi/hello_triangle/triangle.c	2015-03-08 11:29:00.839558709 +0000
 @@ -34,11 +34,11 @@
  #include <assert.h>
  #include <unistd.h>
- 
+
 -#include "bcm_host.h"
 +#include <bcm_host.h>
- 
+
 -#include "GLES/gl.h"
 -#include "EGL/egl.h"
 -#include "EGL/eglext.h"
 +#include <GLES/gl.h>
 +#include <EGL/egl.h>
 +#include <EGL/eglext.h>
- 
+
  #include "cube_texture_and_coords.h"
- 
-diff -ur raspberrypi-userland-2fa36bf.orig/host_applications/linux/apps/hello_pi/hello_triangle2/triangle2.c raspberrypi-userland-2fa36bf/host_applications/linux/apps/hello_pi/hello_triangle2/triangle2.c
---- raspberrypi-userland-2fa36bf.orig/host_applications/linux/apps/hello_pi/hello_triangle2/triangle2.c	2014-08-08 15:48:27.000000000 +0100
-+++ raspberrypi-userland-2fa36bf/host_applications/linux/apps/hello_pi/hello_triangle2/triangle2.c	2015-03-08 11:14:43.523966009 +0000
+
+diff -ur raspberrypi-userland-8369e39.orig/host_applications/linux/apps/hello_pi/hello_triangle2/triangle2.c raspberrypi-userland-8369e39/host_applications/linux/apps/hello_pi/hello_triangle2/triangle2.c
+--- raspberrypi-userland-8369e39.orig/host_applications/linux/apps/hello_pi/hello_triangle2/triangle2.c	2014-08-08 15:48:27.000000000 +0100
++++ raspberrypi-userland-8369e39/host_applications/linux/apps/hello_pi/hello_triangle2/triangle2.c	2015-03-08 11:14:43.523966009 +0000
 @@ -36,11 +36,11 @@
  #include <assert.h>
  #include <unistd.h>
- 
+
 -#include "bcm_host.h"
 +#include <bcm_host.h>
- 
+
 -#include "GLES2/gl2.h"
 -#include "EGL/egl.h"
 -#include "EGL/eglext.h"
 +#include <GLES2/gl2.h>
 +#include <EGL/egl.h>
 +#include <EGL/eglext.h>
- 
+
  typedef struct
  {
-diff -ur raspberrypi-userland-2fa36bf.orig/host_applications/linux/apps/hello_pi/hello_video/video.c raspberrypi-userland-2fa36bf/host_applications/linux/apps/hello_pi/hello_video/video.c
---- raspberrypi-userland-2fa36bf.orig/host_applications/linux/apps/hello_pi/hello_video/video.c	2014-08-08 15:48:28.000000000 +0100
-+++ raspberrypi-userland-2fa36bf/host_applications/linux/apps/hello_pi/hello_video/video.c	2015-03-08 11:14:43.528966129 +0000
+diff -ur raspberrypi-userland-8369e39.orig/host_applications/linux/apps/hello_pi/hello_video/video.c raspberrypi-userland-8369e39/host_applications/linux/apps/hello_pi/hello_video/video.c
+--- raspberrypi-userland-8369e39.orig/host_applications/linux/apps/hello_pi/hello_video/video.c	2014-08-08 15:48:28.000000000 +0100
++++ raspberrypi-userland-8369e39/host_applications/linux/apps/hello_pi/hello_video/video.c	2015-03-08 11:14:43.528966129 +0000
 @@ -31,7 +31,7 @@
  #include <stdlib.h>
  #include <string.h>
- 
+
 -#include "bcm_host.h"
 +#include <bcm_host.h>
  #include "ilclient.h"
- 
+
  static int video_decode_test(char *filename)
-diff -ur raspberrypi-userland-2fa36bf.orig/host_applications/linux/apps/hello_pi/hello_videocube/triangle.c raspberrypi-userland-2fa36bf/host_applications/linux/apps/hello_pi/hello_videocube/triangle.c
---- raspberrypi-userland-2fa36bf.orig/host_applications/linux/apps/hello_pi/hello_videocube/triangle.c	2014-08-08 15:48:28.000000000 +0100
-+++ raspberrypi-userland-2fa36bf/host_applications/linux/apps/hello_pi/hello_videocube/triangle.c	2015-03-08 11:29:38.625466325 +0000
+diff -ur raspberrypi-userland-8369e39.orig/host_applications/linux/apps/hello_pi/hello_videocube/triangle.c raspberrypi-userland-8369e39/host_applications/linux/apps/hello_pi/hello_videocube/triangle.c
+--- raspberrypi-userland-8369e39.orig/host_applications/linux/apps/hello_pi/hello_videocube/triangle.c	2014-08-08 15:48:28.000000000 +0100
++++ raspberrypi-userland-8369e39/host_applications/linux/apps/hello_pi/hello_videocube/triangle.c	2015-03-08 11:29:38.625466325 +0000
 @@ -35,11 +35,11 @@
  #include <assert.h>
  #include <unistd.h>
- 
+
 -#include "bcm_host.h"
 +#include <bcm_host.h>
- 
+
 -#include "GLES/gl.h"
 -#include "EGL/egl.h"
 -#include "EGL/eglext.h"
 +#include <GLES/gl.h>
 +#include <EGL/egl.h>
 +#include <EGL/eglext.h>
- 
+
  #include "cube_texture_and_coords.h"
- 
-diff -ur raspberrypi-userland-2fa36bf.orig/host_applications/linux/apps/hello_pi/hello_videocube/video.c raspberrypi-userland-2fa36bf/host_applications/linux/apps/hello_pi/hello_videocube/video.c
---- raspberrypi-userland-2fa36bf.orig/host_applications/linux/apps/hello_pi/hello_videocube/video.c	2014-08-08 15:48:28.000000000 +0100
-+++ raspberrypi-userland-2fa36bf/host_applications/linux/apps/hello_pi/hello_videocube/video.c	2015-03-08 11:24:28.093007343 +0000
+
+diff -ur raspberrypi-userland-8369e39.orig/host_applications/linux/apps/hello_pi/hello_videocube/video.c raspberrypi-userland-8369e39/host_applications/linux/apps/hello_pi/hello_videocube/video.c
+--- raspberrypi-userland-8369e39.orig/host_applications/linux/apps/hello_pi/hello_videocube/video.c	2014-08-08 15:48:28.000000000 +0100
++++ raspberrypi-userland-8369e39/host_applications/linux/apps/hello_pi/hello_videocube/video.c	2015-03-08 11:24:28.093007343 +0000
 @@ -32,7 +32,7 @@
  #include <stdlib.h>
  #include <string.h>
- 
+
 -#include "bcm_host.h"
 +#include <bcm_host.h>
  #include "ilclient.h"
- 
+
  static OMX_BUFFERHEADERTYPE* eglBuffer = NULL;
-diff -ur raspberrypi-userland-2fa36bf.orig/host_applications/linux/apps/hello_pi/libs/ilclient/ilclient.c raspberrypi-userland-2fa36bf/host_applications/linux/apps/hello_pi/libs/ilclient/ilclient.c
---- raspberrypi-userland-2fa36bf.orig/host_applications/linux/apps/hello_pi/libs/ilclient/ilclient.c	2014-08-08 15:48:28.000000000 +0100
-+++ raspberrypi-userland-2fa36bf/host_applications/linux/apps/hello_pi/libs/ilclient/ilclient.c	2015-03-08 11:33:36.606182617 +0000
+diff -ur raspberrypi-userland-8369e39.orig/host_applications/linux/apps/hello_pi/libs/ilclient/ilclient.c raspberrypi-userland-8369e39/host_applications/linux/apps/hello_pi/libs/ilclient/ilclient.c
+--- raspberrypi-userland-8369e39.orig/host_applications/linux/apps/hello_pi/libs/ilclient/ilclient.c	2014-08-08 15:48:28.000000000 +0100
++++ raspberrypi-userland-8369e39/host_applications/linux/apps/hello_pi/libs/ilclient/ilclient.c	2015-03-08 11:33:36.606182617 +0000
 @@ -47,11 +47,11 @@
  #include <ctype.h>
  #include <assert.h>
- 
+
 -#include "interface/vcos/vcos.h"
 -#include "interface/vcos/vcos_logging.h"
 -#include "interface/vmcs_host/vchost.h"
 +#include <interface/vcos/vcos.h>
 +#include <interface/vcos/vcos_logging.h>
 +#include <interface/vmcs_host/vchost.h>
- 
+
 -#include "IL/OMX_Broadcom.h"
 +#include <IL/OMX_Broadcom.h>
  #include "ilclient.h"
- 
+
  #define VCOS_LOG_CATEGORY (&ilclient_log_category)
-diff -ur raspberrypi-userland-2fa36bf.orig/host_applications/linux/apps/hello_pi/libs/ilclient/ilclient.h raspberrypi-userland-2fa36bf/host_applications/linux/apps/hello_pi/libs/ilclient/ilclient.h
---- raspberrypi-userland-2fa36bf.orig/host_applications/linux/apps/hello_pi/libs/ilclient/ilclient.h	2014-08-08 15:48:28.000000000 +0100
-+++ raspberrypi-userland-2fa36bf/host_applications/linux/apps/hello_pi/libs/ilclient/ilclient.h	2015-03-08 11:34:04.476852069 +0000
+diff -ur raspberrypi-userland-8369e39.orig/host_applications/linux/apps/hello_pi/libs/ilclient/ilclient.h raspberrypi-userland-8369e39/host_applications/linux/apps/hello_pi/libs/ilclient/ilclient.h
+--- raspberrypi-userland-8369e39.orig/host_applications/linux/apps/hello_pi/libs/ilclient/ilclient.h	2014-08-08 15:48:28.000000000 +0100
++++ raspberrypi-userland-8369e39/host_applications/linux/apps/hello_pi/libs/ilclient/ilclient.h	2015-03-08 11:34:04.476852069 +0000
 @@ -43,8 +43,8 @@
  #ifndef _IL_CLIENT_H
  #define _IL_CLIENT_H
- 
+
 -#include "IL/OMX_Broadcom.h"
 -#include "interface/vcos/vcos.h"
 +#include <IL/OMX_Broadcom.h>
 +#include <interface/vcos/vcos.h>
- 
+
  /**
   * The <DFN>ILCLIENT_T</DFN> structure encapsulates the state needed for the IL
-diff -ur raspberrypi-userland-2fa36bf.orig/host_applications/linux/apps/hello_pi/libs/ilclient/ilcore.c raspberrypi-userland-2fa36bf/host_applications/linux/apps/hello_pi/libs/ilclient/ilcore.c
---- raspberrypi-userland-2fa36bf.orig/host_applications/linux/apps/hello_pi/libs/ilclient/ilcore.c	2014-08-08 15:48:28.000000000 +0100
-+++ raspberrypi-userland-2fa36bf/host_applications/linux/apps/hello_pi/libs/ilclient/ilcore.c	2015-03-08 11:34:40.252711405 +0000
+diff -ur raspberrypi-userland-8369e39.orig/host_applications/linux/apps/hello_pi/libs/ilclient/ilcore.c raspberrypi-userland-8369e39/host_applications/linux/apps/hello_pi/libs/ilclient/ilcore.c
+--- raspberrypi-userland-8369e39.orig/host_applications/linux/apps/hello_pi/libs/ilclient/ilcore.c	2014-08-08 15:48:28.000000000 +0100
++++ raspberrypi-userland-8369e39/host_applications/linux/apps/hello_pi/libs/ilclient/ilcore.c	2015-03-08 11:34:40.252711405 +0000
 @@ -40,12 +40,12 @@
  #include <stdlib.h>
  #include <string.h>
- 
+
 -#include "IL/OMX_Component.h"
 -#include "interface/vcos/vcos.h"
 +#include <IL/OMX_Component.h>
 +#include <interface/vcos/vcos.h>
- 
+
 -#include "interface/vmcs_host/vcilcs.h"
 -#include "interface/vmcs_host/vchost.h"
 -#include "interface/vmcs_host/vcilcs_common.h"
 +#include <interface/vmcs_host/vcilcs.h>
 +#include <interface/vmcs_host/vchost.h>
 +#include <interface/vmcs_host/vcilcs_common.h>
- 
+
  static int coreInit = 0;
  static int nActiveHandles = 0;
-diff -ur raspberrypi-userland-2fa36bf.orig/host_applications/linux/apps/hello_pi/libs/vgfont/graphics_x_private.h raspberrypi-userland-2fa36bf/host_applications/linux/apps/hello_pi/libs/vgfont/graphics_x_private.h
---- raspberrypi-userland-2fa36bf.orig/host_applications/linux/apps/hello_pi/libs/vgfont/graphics_x_private.h	2014-08-08 15:48:28.000000000 +0100
-+++ raspberrypi-userland-2fa36bf/host_applications/linux/apps/hello_pi/libs/vgfont/graphics_x_private.h	2015-03-08 11:30:08.646187422 +0000
+diff -ur raspberrypi-userland-8369e39.orig/host_applications/linux/apps/hello_pi/libs/vgfont/graphics_x_private.h raspberrypi-userland-8369e39/host_applications/linux/apps/hello_pi/libs/vgfont/graphics_x_private.h
+--- raspberrypi-userland-8369e39.orig/host_applications/linux/apps/hello_pi/libs/vgfont/graphics_x_private.h	2014-08-08 15:48:28.000000000 +0100
++++ raspberrypi-userland-8369e39/host_applications/linux/apps/hello_pi/libs/vgfont/graphics_x_private.h	2015-03-08 11:30:08.646187422 +0000
 @@ -32,13 +32,13 @@
- 
+
  #define VCOS_LOG_CATEGORY (&gx_log_cat)
- 
+
 -#include "EGL/egl.h"
 -#include "EGL/eglext.h"
 -#include "VG/openvg.h"
@@ -287,19 +287,19 @@ diff -ur raspberrypi-userland-2fa36bf.orig/host_applications/linux/apps/hello_pi
 +#include <EGL/eglext.h>
 +#include <VG/openvg.h>
 +#include <VG/vgu.h>
- 
+
  #include "vgfont.h"
 -#include "bcm_host.h"
 +#include <bcm_host.h>
- 
+
  extern VCOS_LOG_CAT_T gx_log_cat;
- 
-diff -ur raspberrypi-userland-2fa36bf.orig/host_applications/linux/apps/hello_pi/libs/vgfont/vgfont.h raspberrypi-userland-2fa36bf/host_applications/linux/apps/hello_pi/libs/vgfont/vgfont.h
---- raspberrypi-userland-2fa36bf.orig/host_applications/linux/apps/hello_pi/libs/vgfont/vgfont.h	2014-08-08 15:48:28.000000000 +0100
-+++ raspberrypi-userland-2fa36bf/host_applications/linux/apps/hello_pi/libs/vgfont/vgfont.h	2015-03-08 11:32:14.599212811 +0000
+
+diff -ur raspberrypi-userland-8369e39.orig/host_applications/linux/apps/hello_pi/libs/vgfont/vgfont.h raspberrypi-userland-8369e39/host_applications/linux/apps/hello_pi/libs/vgfont/vgfont.h
+--- raspberrypi-userland-8369e39.orig/host_applications/linux/apps/hello_pi/libs/vgfont/vgfont.h	2014-08-08 15:48:28.000000000 +0100
++++ raspberrypi-userland-8369e39/host_applications/linux/apps/hello_pi/libs/vgfont/vgfont.h	2015-03-08 11:32:14.599212811 +0000
 @@ -31,9 +31,9 @@
  #define VCFTLIB_H
- 
+
  #include <stdint.h>
 -#include "interface/vmcs_host/vc_dispservice_x_defs.h"
 -#include "interface/vctypes/vc_image_types.h"
@@ -307,33 +307,33 @@ diff -ur raspberrypi-userland-2fa36bf.orig/host_applications/linux/apps/hello_pi
 +#include <interface/vmcs_host/vc_dispservice_x_defs.h>
 +#include <interface/vctypes/vc_image_types.h>
 +#include <interface/vcos/vcos.h>
- 
+
  //Definitions which in certain functions can be used to mean the actual width and height of a resource, without
  //having to know the data implicitly.
-diff -ur raspberrypi-userland-2fa36bf.orig/host_applications/linux/apps/hello_pi/libs/vgfont/vgft.h raspberrypi-userland-2fa36bf/host_applications/linux/apps/hello_pi/libs/vgfont/vgft.h
---- raspberrypi-userland-2fa36bf.orig/host_applications/linux/apps/hello_pi/libs/vgfont/vgft.h	2014-08-23 17:33:49.000000000 +0100
-+++ raspberrypi-userland-2fa36bf/host_applications/linux/apps/hello_pi/libs/vgfont/vgft.h	2015-03-08 11:32:49.685055572 +0000
+diff -ur raspberrypi-userland-8369e39.orig/host_applications/linux/apps/hello_pi/libs/vgfont/vgft.h raspberrypi-userland-8369e39/host_applications/linux/apps/hello_pi/libs/vgfont/vgft.h
+--- raspberrypi-userland-8369e39.orig/host_applications/linux/apps/hello_pi/libs/vgfont/vgft.h	2014-08-23 17:33:49.000000000 +0100
++++ raspberrypi-userland-8369e39/host_applications/linux/apps/hello_pi/libs/vgfont/vgft.h	2015-03-08 11:32:49.685055572 +0000
 @@ -30,7 +30,7 @@
  #ifndef VGFT_H
  #define VGFT_H
- 
+
 -#include "interface/vcos/vcos.h"
 +#include <interface/vcos/vcos.h>
  #include <VG/openvg.h>
  #include <ft2build.h>
- 
-diff -ur raspberrypi-userland-2fa36bf.orig/host_applications/linux/apps/hello_pi/Makefile.include raspberrypi-userland-2fa36bf/host_applications/linux/apps/hello_pi/Makefile.include
---- raspberrypi-userland-2fa36bf.orig/host_applications/linux/apps/hello_pi/Makefile.include	2014-09-29 12:11:12.000000000 +0100
-+++ raspberrypi-userland-2fa36bf/host_applications/linux/apps/hello_pi/Makefile.include	2015-03-08 11:14:43.528966129 +0000
+
+diff -ur raspberrypi-userland-8369e39.orig/host_applications/linux/apps/hello_pi/Makefile.include raspberrypi-userland-8369e39/host_applications/linux/apps/hello_pi/Makefile.include
+--- raspberrypi-userland-8369e39.orig/host_applications/linux/apps/hello_pi/Makefile.include	2014-09-29 12:11:12.000000000 +0100
++++ raspberrypi-userland-8369e39/host_applications/linux/apps/hello_pi/Makefile.include	2015-03-08 11:14:43.528966129 +0000
 @@ -1,9 +1,9 @@
- 
+
  CFLAGS+=-DSTANDALONE -D__STDC_CONSTANT_MACROS -D__STDC_LIMIT_MACROS -DTARGET_POSIX -D_LINUX -fPIC -DPIC -D_REENTRANT -D_LARGEFILE64_SOURCE -D_FILE_OFFSET_BITS=64 -U_FORTIFY_SOURCE -Wall -g -DHAVE_LIBOPENMAX=2 -DOMX -DOMX_SKIP64BIT -ftree-vectorize -pipe -DUSE_EXTERNAL_OMX -DHAVE_LIBBCM_HOST -DUSE_EXTERNAL_LIBBCM_HOST -DUSE_VCHIQ_ARM -Wno-psabi
- 
+
 -LDFLAGS+=-L$(SDKSTAGE)/opt/vc/lib/ -lGLESv2 -lEGL -lopenmaxil -lbcm_host -lvcos -lvchiq_arm -lpthread -lrt -lm -L../libs/ilclient -L../libs/vgfont
 +LDFLAGS+=-L$(SDKSTAGE)/usr/lib/vc -lGLESv2 -lEGL -lopenmaxil -lbcm_host -lvcos -lvchiq_arm -lpthread -lrt -lm -L../libs/ilclient -L../libs/vgfont
- 
+
 -INCLUDES+=-I$(SDKSTAGE)/opt/vc/include/ -I$(SDKSTAGE)/opt/vc/include/interface/vcos/pthreads -I$(SDKSTAGE)/opt/vc/include/interface/vmcs_host/linux -I./ -I../libs/ilclient -I../libs/vgfont
 +INCLUDES+=-I$(SDKSTAGE)/usr/include/vc -I$(SDKSTAGE)/usr/include/vc/interface/vcos/pthreads -I$(SDKSTAGE)/usr/include/vc/interface/vmcs_host/linux -I./ -I../libs/ilclient -I../libs/vgfont
- 
+
  all: $(BIN) $(LIB)
- 
+
