@@ -90,7 +90,7 @@ Static versions of libraries for accessing the BCM283x VideoCore GPU on the Rasp
 
 
 %prep
-%autosetup -n userland-%{commit_long}
+%setup -n userland-%{commit_long}
 
 %patch0 -p1
 
