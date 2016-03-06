@@ -1,6 +1,6 @@
 # actually, the date is the date packaged, not the commit date
-%global commit_date	20160205
-%global commit_long	2a4af2192c0e161555fdb2a12e902b587166c4a6
+%global commit_date	20160305
+%global commit_long	8369e390999f4a7c3bc57e577247e0dd502c51f7
 %global commit_short	%(c=%{commit_long}; echo ${c:0:7})
 
 Name:		raspberrypi-vc
@@ -8,8 +8,8 @@ Version:	%{commit_date}
 Release:	1.%{commit_short}%{dist}
 Summary:	VideoCore GPU libraries, utilities and demos for Raspberry Pi
 License:	Redistributable, with restrictions; see LICENSE.broadcom
-URL:		https://github.com/raspberrypi
-Source0:	raspberrypi-userland-%{commit_short}.tar.xz
+URL:      https://github.com/raspberrypi
+Source0:	https://github.com/raspberrypi/userland/archive/%{commit_long}.tar.gz#/raspberrypi-userland-%{commit_short}.tar.gz
 Source1:	raspberrypi-vc-libs.conf
 
 # Patch0 fixes up paths for relocation from /opt to system directories.
@@ -103,7 +103,7 @@ make %{?_smp_mflags} all
 %install
 rm -rf %{buildroot}
 
-pushd build 
+pushd build
 make install DESTDIR=%{buildroot}
 
 # /opt/vc -> /usr
@@ -167,6 +167,9 @@ popd # build
 %doc LICENCE
 
 %changelog
+* Sun Mar 05 2016 mrjoshuap <jpreston at redhat dot com> - 20160305-1.8369e39
+- Sync to latest git revision: 8369e390999f4a7c3bc57e577247e0dd502c51f7
+
 * Fri Feb 05 2016 Vaughan <devel at agrez dot net> - 20160205-1.2a4af21
 - Sync to latest git revision: 2a4af2192c0e161555fdb2a12e902b587166c4a6
 
@@ -196,7 +199,7 @@ popd # build
   mmal_queue: Add sanity checking to avoid common queue errors
 - Git revision master d0954df802d43ea7cc94481435188913f6a65eee
   Add MMAL to IL mapping for rawcam parameters
-  
+
   * Tue May 26 2015 Clive Messer <clive.messer@squeezecommunity.org> - 20150526-502.gitd4aa617
 - Remove the hard-coded provides.
 
@@ -216,15 +219,15 @@ popd # build
   Merge pull request #241 from nubok/patch-1
   Added "all" target to hello_fft/makefile
 - Git revision master 74a6acf296bd814760b4b33f31925087e2a55cc0
-  Added "all" target to hello_fft/makefile    
-  Same patch as https://github.com/raspberrypi/firmware/pull/422 for the 
-   firmware repository: The reason, why I added a new target "all" is that 
-   without it, the script /opt/vc/src/hello_pi/rebuild.sh only builds 
+  Added "all" target to hello_fft/makefile
+  Same patch as https://github.com/raspberrypi/firmware/pull/422 for the
+   firmware repository: The reason, why I added a new target "all" is that
+   without it, the script /opt/vc/src/hello_pi/rebuild.sh only builds
    hello_fft.bin, but not hello_fft_2d.bin.
 
 * Wed Apr 29 2015 Clive Messer <clive.messer@squeezecommunity.org> - 20150429-501.gitd8f146a.sc20
 - Git revision master d8f146af05c2b9cd92f9a426148376b349f744fd
-  Merge pull request #240 from 6by9/master    
+  Merge pull request #240 from 6by9/master
   Zero copy, and buildme change for Pi2
 - Git revision master e8707f827c0e4ae5de892ac700b5bdb649350a1a
   Enable VCSM in MMAL by default
@@ -233,20 +236,20 @@ popd # build
 
 * Fri Apr 24 2015 Clive Messer <clive.messer@squeezecommunity.org> - 20150424-501.git198b9ac.sc20
 - Git revision master 198b9ac3bcc0b54f1563664870fe415f04b7b6b5
-  Merge pull request #239 from thaytan/master    
+  Merge pull request #239 from thaytan/master
   Fix intra-refresh port parameter setting.
 - Git revision master 41b2b2918f08fbf7603e6f52120fff5bb6cc802c
-  Fix intra-refresh port parameter setting.    
+  Fix intra-refresh port parameter setting.
   check mmal_port_parameter_get() succeeds when getting
-   the default intra refresh values. It fails on older firmware.    
+   the default intra refresh values. It fails on older firmware.
   Fixes #238
 
 * Sat Apr 18 2015 Clive Messer <clive.messer@squeezecommunity.org> - 20150418gitb69f807-501.sc20
 - Git revision master b69f807ce59189457662c2144a8e7e12dc776988
-  Merge pull request #237 from MarkusMattinen/patch-1    
+  Merge pull request #237 from MarkusMattinen/patch-1
   Fix typo in buildme shebang
 - Git revision master 36a20b6d92790a530421cb319a83ff9be79509d3
-  Fix typo in buildme shebang    
+  Fix typo in buildme shebang
   Fixes #176.
 
 * Sun Apr 12 2015 Clive Messer <clive.messer@squeezecommunity.org> - 20150412gitb4f537b-501.sc20
@@ -257,7 +260,7 @@ popd # build
 
 * Tue Mar 17 2015 Clive Messer <clive.messer@squeezecommunity.org> - 20150323git7650bcb-501.sc20
 - Git revision master 7650bcbc9ba8f1c5e29be7726d184b31c2665c46
-  Merge pull request #233 from jsonn/patch-1    
+  Merge pull request #233 from jsonn/patch-1
   Use a more sensible check than a tautoligy
 - Git revision master 9b45a317b0ab56e83dfc228b6cd5800a0078835f
   Merge pull request #234 from jsonn/patch-2
@@ -279,7 +282,7 @@ popd # build
   Merge pull request #226 from 6by9/PR20150310
   Add an error message for MMAL_EVENT_ERROR
 - Git revision master 695e11ced1e286d945f7dfcebae484ef3848a830
-  Add an error message for MMAL_EVENT_ERROR    
+  Add an error message for MMAL_EVENT_ERROR
   It is signalled by the camera when no data is received on the CSI-2
    bus. Handle it specifically to try and avoid a bundle of duplicate
    forum posts.
@@ -394,18 +397,18 @@ popd # build
 * Wed Aug 13 2014 Clive Messer <clive.messer@squeezecommunity.org> - 20140813git43c5b2f-501.rpfr20
 - Updated firmware to latest commit 43c5b2fc9bdb0a43ba67661b8677445e71ae9e82
   kernel/libs: VCHIQ: Make service closure fully synchronous
-   With these patches, calls to vchiq_close_service and vchiq_remove_service 
-    won't return until any associated callback have been delivered to the 
-    callback thread.  
+   With these patches, calls to vchiq_close_service and vchiq_remove_service
+    won't return until any associated callback have been delivered to the
+    callback thread.
   firmware: video_render: Add parameter for setting the colourspace
    Only applicable for non-opaque buffers.
   firmware: gpioman: Allow oscillator to be selected as a clock source
-  firmware: image_decode: huffman and quantization tables shouldn't trigger 
-   'keep all following'. 
+  firmware: image_decode: huffman and quantization tables shouldn't trigger
+   'keep all following'.
    See: http://forum.stmlabs.com/showthread.php?tid=14839
-  userland: hello_jpeg: Fix decode fail when width/height can't be parsed 
+  userland: hello_jpeg: Fix decode fail when width/height can't be parsed
    from first 80K block.
-  firmware: video_render: Fix for stereo rendering when crop height is not 
+  firmware: video_render: Fix for stereo rendering when crop height is not
    populated.
 * Sun Aug 10 2014 Clive Messer <clive.messer@squeezecommunity.org> - 20140810gitdf36e8d-501.rpfr20
 - Add 'Provides: libvcsm.so' to libs sub-package.
@@ -488,13 +491,13 @@ popd # build
 - Updated to upstream, added suid on utils
 
 * Fri Apr 19 2013 andrew.greene@senecacollege.ca - 20130410git7fcb9d3-2.rpfr18
-- Included provides for libs libmmal_core and libmmal_util these are needed for vc-utils 
+- Included provides for libs libmmal_core and libmmal_util these are needed for vc-utils
 
 * Tue Apr 16 2013 andrew.greene@senecacollege.ca - 20130410git7fcb9d3eb2-1.rpfr18
 - Updated to latest version changed vchost_config.h location
 
 * Sat Mar 02 2013 andrew.greene@senecacollege.ca - 20121125git7e9ac50-7.rpfr18
-- Copied missing header file to the correct location vchost_config.h vcos_platform_types.h and vcos_platform.h 
+- Copied missing header file to the correct location vchost_config.h vcos_platform_types.h and vcos_platform.h
 
 * Fri Mar 01 2013 andrew.greene@senecacollege.ca - 20121125git7e9ac50-4.rpfr18
 - rebuilt for armv6hl
