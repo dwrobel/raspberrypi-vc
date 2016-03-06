@@ -90,7 +90,7 @@ Static versions of libraries for accessing the BCM283x VideoCore GPU on the Rasp
 
 
 %prep
-%setup -q -c -n raspberrypi-userland-%{commit_short}
+%setup -q -n raspberrypi-userland-%{commit_short}
 
 %patch0 -p1
 
