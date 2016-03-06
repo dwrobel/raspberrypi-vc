@@ -410,6 +410,7 @@ popd # build
    from first 80K block.
   firmware: video_render: Fix for stereo rendering when crop height is not
    populated.
+
 * Sun Aug 10 2014 Clive Messer <clive.messer@squeezecommunity.org> - 20140810gitdf36e8d-501.rpfr20
 - Add 'Provides: libvcsm.so' to libs sub-package.
 - updated to firmware/userland to latest commit
