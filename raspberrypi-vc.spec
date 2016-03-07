@@ -167,7 +167,7 @@ popd # build
 %doc LICENCE
 
 %changelog
-* Sun Mar 05 2016 mrjoshuap <jpreston at redhat dot com> - 20160305-1.8369e39
+* Sun Mar 06 2016 mrjoshuap <jpreston at redhat dot com> - 20160305-1.8369e39
 - Sync to latest git revision: 8369e390999f4a7c3bc57e577247e0dd502c51f7
 
 * Fri Feb 05 2016 Vaughan <devel at agrez dot net> - 20160205-1.2a4af21
