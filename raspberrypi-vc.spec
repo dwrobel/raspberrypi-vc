@@ -1,6 +1,6 @@
 # actually, the date is the date packaged, not the commit date
-%global commit_date	20160305
-%global commit_long	8369e390999f4a7c3bc57e577247e0dd502c51f7
+%global commit_date	20160321
+%global commit_long	2f56a2943a9eb8420df52ccf91f5a1c5a70e8713
 %global commit_short	%(c=%{commit_long}; echo ${c:0:7})
 
 Name:		raspberrypi-vc
@@ -8,7 +8,7 @@ Version:	%{commit_date}
 Release:	1.%{commit_short}%{dist}
 Summary:	VideoCore GPU libraries, utilities and demos for Raspberry Pi
 License:	Redistributable, with restrictions; see LICENSE.broadcom
-URL:      https://github.com/raspberrypi
+URL:            https://github.com/raspberrypi
 Source0:	https://github.com/raspberrypi/userland/archive/%{commit_long}.tar.gz#/raspberrypi-userland-%{commit_short}.tar.gz
 Source1:	raspberrypi-vc-libs.conf
 
@@ -20,7 +20,7 @@ BuildRequires:	cmake, gcc-c++
 ExclusiveArch:	armv6hl armv7hl
 
 %description
-Libraries, utilities and demos for the Raspberry Pi BCM283x SOC GPU
+Libraries, utilities and demos for the Raspberry Pi BCM283x SOC GPUs
 
 
 %package libs
@@ -97,7 +97,9 @@ Static versions of libraries for accessing the BCM283x VideoCore GPU on the Rasp
 %build
 mkdir build
 pushd build
-cmake -DCMAKE_BUILD_TYPE=ReleaseWithDebInfo -DCMAKE_C_FLAGS="%{optflags} -fgnu89-inline" ..
+#-Wp,-D_FORTIFY_SOURCE=2 opt flag is currently breaking the build
+OPTFLAGS=$(echo "%{optflags}" |sed 's|-Wp,-D_FORTIFY_SOURCE=2 ||')
+cmake -DCMAKE_BUILD_TYPE=ReleaseWithDebInfo -DCMAKE_C_FLAGS="$OPTFLAGS -fgnu89-inline" ..
 make %{?_smp_mflags} all
 
 %install
@@ -167,6 +169,11 @@ popd # build
 %doc LICENCE
 
 %changelog
+* Tue Mar 22 2016 Vaughan <devel at agrez dot net> - 20160321-1.2f56a29
+- Sync to latest git revision: 2f56a2943a9eb8420df52ccf91f5a1c5a70e8713
+  Includes new dtoverlay utility
+- Disable optflag -Wp,-D_FORTIFY_SOURCE=2
+
 * Sun Mar 06 2016 mrjoshuap <jpreston at redhat dot com> - 20160305-1.8369e39
 - Sync to latest git revision: 8369e390999f4a7c3bc57e577247e0dd502c51f7
 
