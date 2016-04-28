@@ -1,6 +1,6 @@
 # actually, the date is the date packaged, not the commit date
-%global commit_date	20160321
-%global commit_long	2f56a2943a9eb8420df52ccf91f5a1c5a70e8713
+%global commit_date	20160428
+%global commit_long	17c28b9d1d234893b73adeb95efc4959b617fc85
 %global commit_short	%(c=%{commit_long}; echo ${c:0:7})
 
 Name:		raspberrypi-vc
@@ -26,23 +26,7 @@ Libraries, utilities and demos for the Raspberry Pi BCM283x SOC GPUs
 %package libs
 Summary:	Libraries for accessing the Raspberry Pi GPU
 Requires:	bcm283x-firmware >= 20150819
-#Provides:	libEGL.so
-#Provides:	libGLESv1_CM.so
-#Provides:	libGLESv2.so
-#Provides:	libOpenVG.so
-#Provides:	libWFC.so
-#Provides:	libbcm_host.so
-#Provides:	libcontfainers.so
-#Provides:	libdebug_sym.so
-#Provides:	libmmal.so
-#Provides:	libmmal_components.so
-#Provides:	libmmal_core.so
-#Provides:	libmmal_util.so
-#Provides:	libmmal_vc_client.so
-#Provides:	libopenmaxil.so
-#Provides:	libvchiq_arm.so
-#Provides:	libvcos.so
-#Provides:	libvcsm.so
+
 
 %description libs
 Shared libraries for accessing the BCM283x VideoCore GPU on the RaspberryPi.
@@ -53,11 +37,6 @@ Summary:	Headers for libraries that access the Raspberry Pi GPU
 Requires:	%{name}-libs = %{version}
 License:	GPLv2+ and Freely redistributable, with restrictions; see LICENCE.broadcom and headers
 
-#Provides:	khrplatform.h
-#Provides:	egl.h
-#Provides:	eglext.h
-#Provides:	eglplatform.h
-#Provides:	gl2.h
 
 %description libs-devel
 Header files for accessing the BCM283x VideoCore GPU on the Raspberry Pi.
@@ -97,9 +76,7 @@ Static versions of libraries for accessing the BCM283x VideoCore GPU on the Rasp
 %build
 mkdir build
 pushd build
-#-Wp,-D_FORTIFY_SOURCE=2 opt flag is currently breaking the build
-OPTFLAGS=$(echo "%{optflags}" |sed 's|-Wp,-D_FORTIFY_SOURCE=2 ||')
-cmake -DCMAKE_BUILD_TYPE=ReleaseWithDebInfo -DCMAKE_C_FLAGS="$OPTFLAGS -fgnu89-inline" ..
+cmake -DCMAKE_BUILD_TYPE=ReleaseWithDebInfo -DCMAKE_C_FLAGS="%{optflags} -fgnu89-inline" ..
 make %{?_smp_mflags} all
 
 %install
@@ -169,6 +146,12 @@ popd # build
 %doc LICENCE
 
 %changelog
+* Thu Apr 28 2016 Vaughan <devel at agrez dot net> - 20160428-1.17c28b9
+- Sync to latest git revision: 17c28b9d1d234893b73adeb95efc4959b617fc85
+- Update raspberrypi-vc-demo-source-path-fixup.patch
+- Re-enable optflag -Wp,-D_FORTIFY_SOURCE=2 (fixed upstream)
+- Clean up old %Provides
+
 * Tue Mar 22 2016 Vaughan <devel at agrez dot net> - 20160321-1.2f56a29
 - Sync to latest git revision: 2f56a2943a9eb8420df52ccf91f5a1c5a70e8713
   Includes new dtoverlay utility
