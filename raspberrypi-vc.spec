@@ -1,6 +1,6 @@
 # actually, the date is the date packaged, not the commit date
-%global commit_date	20160428
-%global commit_long	17c28b9d1d234893b73adeb95efc4959b617fc85
+%global commit_date	20160604
+%global commit_long	7c026fa7a4ded2c525916cc853a32731c072ed1e
 %global commit_short	%(c=%{commit_long}; echo ${c:0:7})
 
 Name:		raspberrypi-vc
@@ -126,6 +126,8 @@ popd # build
 %files libs-devel
 %defattr(0644,root,root,0755)
 %{_includedir}/*
+%dir %{_libdir}/vc/pkgconfig
+%{_libdir}/vc/pkgconfig/*.pc
 %doc LICENCE
 
 %files static
@@ -146,6 +148,10 @@ popd # build
 %doc LICENCE
 
 %changelog
+* Sat Jun 04 2016 Vaughan <devel at agrez dot net> - 20160604-1.7c026fa
+- Sync to latest git revision: 7c026fa7a4ded2c525916cc853a32731c072ed1e
+- Add pkgconfig files to libs-devel
+
 * Thu Apr 28 2016 Vaughan <devel at agrez dot net> - 20160428-1.17c28b9
 - Sync to latest git revision: 17c28b9d1d234893b73adeb95efc4959b617fc85
 - Update raspberrypi-vc-demo-source-path-fixup.patch
