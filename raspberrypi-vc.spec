@@ -1,14 +1,14 @@
 # actually, the date is the date packaged, not the commit date
-%global commit_date	20160616
-%global commit_long	8daf8dd493ecd25ceda075cd6ffa646193f00edb
-%global commit_short	%(c=%{commit_long}; echo ${c:0:7})
+%global commit_date     0160920
+%global commit_long     a1b89e91f393c7134b4cdc36431f863bb3333163
+%global commit_short    %(c=%{commit_long}; echo ${c:0:7})
 
 Name:		raspberrypi-vc
 Version:	%{commit_date}
 Release:	1.%{commit_short}%{dist}
 Summary:	VideoCore GPU libraries, utilities and demos for Raspberry Pi
 License:	Redistributable, with restrictions; see LICENSE.broadcom
-URL:            https://github.com/raspberrypi
+URL:		https://github.com/raspberrypi
 Source0:	https://github.com/raspberrypi/userland/archive/%{commit_long}.tar.gz#/raspberrypi-userland-%{commit_short}.tar.gz
 Source1:	raspberrypi-vc-libs.conf
 
@@ -148,6 +148,10 @@ popd # build
 %doc LICENCE
 
 %changelog
+* Tue Sep 20 2016 Vaughan <devel at agrez dot net> - 20160920-1.a1b89e9
+- Sync to latest git revision: a1b89e91f393c7134b4cdc36431f863bb3333163
+- Update Patch0
+
 * Thu Jun 16 2016 Vaughan <devel at agrez dot net> - 20160616-1.8daf8dd
 - Sync to latest git revision: 8daf8dd493ecd25ceda075cd6ffa646193f00edb
 
