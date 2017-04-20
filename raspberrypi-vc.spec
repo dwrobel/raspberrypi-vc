@@ -89,15 +89,25 @@ make install DESTDIR=%{buildroot}
 mkdir -p %{buildroot}/usr
 mv %{buildroot}/opt/vc/{bin,sbin} %{buildroot}/usr
 
-mkdir -p %{buildroot}/usr/lib/vc
+for i in %{buildroot}/opt/vc/lib/pkgconfig/*.pc; do
+    sed -i "/^prefix=.*$/d" $i
+    sed -i "/^exec_prefix=.*$/d" $i
+    sed -i "s|^libdir=.*$|libdir=%{_libdir}/vc|" $i
+    sed -i "s|^includedir=.*$|includedir=%{_includedir}/vc|" $i
+done
+
+# file /usr/lib/pkgconfig/egl.pc from install of raspberrypi-vc-libs-devel conflicts with file from mesa-libEGL-devel
+mkdir -p %{buildroot}/usr/lib/vc/pkgconfig
+mv %{buildroot}/opt/vc/lib/pkgconfig/egl.pc %{buildroot}/usr/lib/vc/pkgconfig
+
+mv %{buildroot}/opt/vc/lib/pkgconfig %{buildroot}/usr/lib/
 mv %{buildroot}/opt/vc/lib/* %{buildroot}/usr/lib/vc
 
 mkdir -p %{buildroot}/usr/include/vc
 mv %{buildroot}/opt/vc/include/* %{buildroot}/usr/include/vc
 
 mkdir -p %{buildroot}/%{_datadir}/raspberrypi-vc-demo-source
-mv %{buildroot}/opt/vc/src/hello_pi\
- %{buildroot}/%{_datadir}/raspberrypi-vc-demo-source
+mv %{buildroot}/opt/vc/src/hello_pi %{buildroot}/%{_datadir}/raspberrypi-vc-demo-source
 
 # cleanup
 rm -rf %{buildroot}/etc
@@ -126,7 +136,9 @@ popd # build
 %files libs-devel
 %defattr(0644,root,root,0755)
 %{_includedir}/*
+%dir %{_libdir}/pkgconfig
 %dir %{_libdir}/vc/pkgconfig
+%{_libdir}/pkgconfig/*.pc
 %{_libdir}/vc/pkgconfig/*.pc
 %doc LICENCE
 
