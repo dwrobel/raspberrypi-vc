@@ -5,7 +5,7 @@
 
 Name:		raspberrypi-vc
 Version:	%{commit_date}
-Release:	1.%{commit_short}%{dist}
+Release:	2.%{commit_short}%{dist}
 Summary:	VideoCore GPU libraries, utilities and demos for Raspberry Pi
 License:	Redistributable, with restrictions; see LICENSE.broadcom
 URL:		https://github.com/raspberrypi
@@ -96,9 +96,10 @@ for i in %{buildroot}/opt/vc/lib/pkgconfig/*.pc; do
     sed -i "s|^includedir=.*$|includedir=%{_includedir}/vc|" $i
 done
 
-# file /usr/lib/pkgconfig/egl.pc from install of raspberrypi-vc-libs-devel conflicts with file from mesa-libEGL-devel
+# files egl.pc glesv2.pc from raspberrypi-vc-libs-devel conflict with mesa-libEGL-devel
 mkdir -p %{buildroot}/usr/lib/vc/pkgconfig
 mv %{buildroot}/opt/vc/lib/pkgconfig/egl.pc %{buildroot}/usr/lib/vc/pkgconfig
+mv %{buildroot}/opt/vc/lib/pkgconfig/glesv2.pc %{buildroot}/usr/lib/vc/pkgconfig
 
 mv %{buildroot}/opt/vc/lib/pkgconfig %{buildroot}/usr/lib/
 mv %{buildroot}/opt/vc/lib/* %{buildroot}/usr/lib/vc
@@ -160,6 +161,9 @@ popd # build
 %doc LICENCE
 
 %changelog
+* Sat May 06 2017 Vaughan <devel at agrez dot net> - 20170418-2.b8bdcc0
+- Fix pkgconfig file glesv2.pc conflicts with mesa-libGLES-devel
+
 * Tue Apr 18 2017 Vaughan <devel at agrez dot net> - 20170418-1.b8bdcc0
 - Fix pkgconfig files
 - Sync to latest git revision: b8bdcc0ed922a564f117e6a9a97ebbceab0b4024
