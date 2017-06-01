@@ -1,11 +1,11 @@
 # actually, the date is the date packaged, not the commit date
-%global commit_date     20170418
-%global commit_long     b8bdcc0ed922a564f117e6a9a97ebbceab0b4024
+%global commit_date     20170601
+%global commit_long     126f3de96f1c7d477a02d703fc285528cbce0540
 %global commit_short    %(c=%{commit_long}; echo ${c:0:7})
 
 Name:		raspberrypi-vc
 Version:	%{commit_date}
-Release:	2.%{commit_short}%{dist}
+Release:	1.%{commit_short}%{dist}
 Summary:	VideoCore GPU libraries, utilities and demos for Raspberry Pi
 License:	Redistributable, with restrictions; see LICENSE.broadcom
 URL:		https://github.com/raspberrypi
@@ -161,6 +161,9 @@ popd # build
 %doc LICENCE
 
 %changelog
+* Thu Jun 01 2017 Vaughan <devel at agrez dot net> - 20170601-1.
+- Sync to latest git revision: 126f3de96f1c7d477a02d703fc285528cbce0540
+
 * Sat May 06 2017 Vaughan <devel at agrez dot net> - 20170418-2.b8bdcc0
 - Fix pkgconfig file glesv2.pc conflicts with mesa-libGLES-devel
 
