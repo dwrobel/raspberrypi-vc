@@ -1,6 +1,6 @@
 # actually, the date is the date packaged, not the commit date
-%global commit_date     20170924
-%global commit_long     a7976021a89451de0d008aa48f16c4e88872899b
+%global commit_date     20171102
+%global commit_long     212184f0f1fdf76eff31e3875fdeb2b7980cd5cb
 %global commit_short    %(c=%{commit_long}; echo ${c:0:7})
 
 Name:		raspberrypi-vc
@@ -161,6 +161,9 @@ popd # build
 %doc LICENCE
 
 %changelog
+* Thu Nov 02 2017 Vaughan <devel at agrez dot net> - 20171102-1.212184f
+- Sync to latest git revision: 212184f0f1fdf76eff31e3875fdeb2b7980cd5cb
+
 * Sun Sep 24 2017 Vaughan <devel at agrez dot net> - 20170924-1.a797602
 - Sync to latest git revision: a7976021a89451de0d008aa48f16c4e88872899b
 
