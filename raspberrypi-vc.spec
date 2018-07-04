@@ -2,82 +2,80 @@
 %global commit_date     20180319
 %global commit_long     eb3e6d7b3d2ae585318c1c16055e3cecedceee4b
 %global commit_short    %(c=%{commit_long}; echo ${c:0:7})
+%global prefix          /opt/vc
 
-Name:		raspberrypi-vc
-Version:	%{commit_date}
-Release:	1.%{commit_short}%{dist}
-Summary:	VideoCore GPU libraries, utilities and demos for Raspberry Pi
-License:	Redistributable, with restrictions; see LICENSE.broadcom
-URL:		https://github.com/raspberrypi
-Source0:	https://github.com/raspberrypi/userland/archive/%{commit_long}.tar.gz#/raspberrypi-userland-%{commit_short}.tar.gz
-Source1:	raspberrypi-vc-libs.conf
-
+Name:       raspberrypi-vc
+Version:    %{commit_date}
+Release:    1.%{commit_short}%{dist}
+Summary:    VideoCore GPU libraries, utilities and demos for Raspberry Pi
+License:    Redistributable, with restrictions; see LICENSE.broadcom
+URL:        https://github.com/raspberrypi
+Source0:    %{url}/userland/archive/%{commit_long}.tar.gz#/raspberrypi-userland-%{commit_short}.tar.gz
+Source1:    raspberrypi-vc-libs.conf
 # Patch0 fixes up paths for relocation from /opt to system directories.
-Patch0:		raspberrypi-vc-demo-source-path-fixup.patch
+Patch0:     raspberrypi-vc-demo-source-path-fixup.patch
+ExclusiveArch:  armv6hl armv7hl
 
-BuildRequires:	cmake, gcc-c++
-
-ExclusiveArch:	armv6hl armv7hl
+BuildRequires:  cmake
+BuildRequires:  gcc-c++
 
 %description
 Libraries, utilities and demos for the Raspberry Pi BCM283x SOC GPUs
 
 
 %package libs
-Summary:	Libraries for accessing the Raspberry Pi GPU
-Requires:	bcm283x-firmware >= 20150819
-
+Summary:    Libraries for accessing the Raspberry Pi GPU
+Requires:   bcm283x-firmware >= 20150819
 
 %description libs
 Shared libraries for accessing the BCM283x VideoCore GPU on the RaspberryPi.
 
 
 %package libs-devel
-Summary:	Headers for libraries that access the Raspberry Pi GPU
-Requires:	%{name}-libs = %{version}
-License:	GPLv2+ and Freely redistributable, with restrictions; see LICENCE.broadcom and headers
-
+Summary:    Headers for libraries that access the Raspberry Pi GPU
+Requires:   %{name}-libs = %{version}
+License:    GPLv2+ and Freely redistributable, with restrictions; see LICENCE.broadcom and headers
 
 %description libs-devel
 Header files for accessing the BCM283x VideoCore GPU on the Raspberry Pi.
 
 
 %package demo-source
-Summary:	Demo source for accessing the Raspberry Pi GPU
-Requires:	%{name}-libs = %{version}
-License:	ASL 2.0
-BuildArch:	noarch
+Summary:    Demo source for accessing the Raspberry Pi GPU
+Requires:   %{name}-libs = %{version}
+License:    ASL 2.0
+BuildArch:  noarch
 
 %description demo-source
 Demo source code for accessing the BCM283x VideoCore GP on the Raspberry Pi.
 
 
 %package utils
-Summary:	Utilities related to the Raspberry Pi GPU
-Requires:	%{name}-libs = %{version}
+Summary:    Utilities related to the Raspberry Pi GPU
+Requires:   %{name}-libs = %{version}
 
 %description utils
 Utilities for using the BCM283x VideoCore GPU on the Raspberry Pi.
 
 
 %package static
-Summary:	Static libraries for accessing the Raspberry Pi GPU
-Requires:	%{name}-libs = %{version}
+Summary:    Static libraries for accessing the Raspberry Pi GPU
+Requires:   %{name}-libs = %{version}
 
 %description static
 Static versions of libraries for accessing the BCM283x VideoCore GPU on the Raspberry Pi.
 
 
 %prep
-%setup -n userland-%{commit_long}
+%autosetup -p1 -n userland-%{commit_long}
 
-%patch0 -p1
 
 %build
 mkdir build
 pushd build
 cmake -DCMAKE_BUILD_TYPE=ReleaseWithDebInfo -DCMAKE_C_FLAGS="%{optflags} -fgnu89-inline" ..
 make %{?_smp_mflags} all
+
 
 %install
 rm -rf %{buildroot}
@@ -87,9 +85,9 @@ make install DESTDIR=%{buildroot}
 
 # /opt/vc -> /usr
 mkdir -p %{buildroot}/usr
-mv %{buildroot}/opt/vc/{bin,sbin} %{buildroot}/usr
+mv %{buildroot}/%{prefix}/{bin,sbin} %{buildroot}/usr
 
-for i in %{buildroot}/opt/vc/lib/pkgconfig/*.pc; do
+for i in %{buildroot}/%{prefix}/lib/pkgconfig/*.pc; do
     sed -i "/^prefix=.*$/d" $i
     sed -i "/^exec_prefix=.*$/d" $i
     sed -i "s|^libdir=.*$|libdir=%{_libdir}/vc|" $i
@@ -97,42 +95,41 @@ for i in %{buildroot}/opt/vc/lib/pkgconfig/*.pc; do
 done
 
 # files egl.pc glesv2.pc from raspberrypi-vc-libs-devel conflict with mesa-libEGL-devel
-mkdir -p %{buildroot}/usr/lib/vc/pkgconfig
-mv %{buildroot}/opt/vc/lib/pkgconfig/egl.pc %{buildroot}/usr/lib/vc/pkgconfig
-mv %{buildroot}/opt/vc/lib/pkgconfig/glesv2.pc %{buildroot}/usr/lib/vc/pkgconfig
+mkdir -p %{buildroot}/%{_libdir}/vc/pkgconfig
+mv %{buildroot}/%{prefix}/lib/pkgconfig/egl.pc %{buildroot}/%{_libdir}/vc/pkgconfig
+mv %{buildroot}/%{prefix}/lib/pkgconfig/glesv2.pc %{buildroot}/%{_libdir}/vc/pkgconfig
 
-mv %{buildroot}/opt/vc/lib/pkgconfig %{buildroot}/usr/lib/
-mv %{buildroot}/opt/vc/lib/* %{buildroot}/usr/lib/vc
+mv %{buildroot}/%{prefix}/lib/pkgconfig %{buildroot}/%{_libdir}
+mv %{buildroot}/%{prefix}/lib/* %{buildroot}/%{_libdir}/vc
 
-mkdir -p %{buildroot}/usr/include/vc
-mv %{buildroot}/opt/vc/include/* %{buildroot}/usr/include/vc
+mkdir -p %{buildroot}/%{_includedir}/vc
+mv %{buildroot}/%{prefix}/include/* %{buildroot}/%{_includedir}/vc
 
 mkdir -p %{buildroot}/%{_datadir}/raspberrypi-vc-demo-source
-mv %{buildroot}/opt/vc/src/hello_pi %{buildroot}/%{_datadir}/raspberrypi-vc-demo-source
+mv %{buildroot}/%{prefix}/src/hello_pi %{buildroot}/%{_datadir}/raspberrypi-vc-demo-source
 
-# cleanup
-rm -rf %{buildroot}/etc
-rm -rf %{buildroot}/opt
+# Remove sysvinit vcfiled
+rm -rf %{buildroot}%{_sysconfdir}/init.d
+rm -rf %{buildroot}%{prefix}/share
 
+# Install ldconfig conf
 mkdir -p %{buildroot}%{_sysconfdir}/ld.so.conf.d
-install -p -c -m 644 %{SOURCE1} %{buildroot}%{_sysconfdir}/ld.so.conf.d/
+install -D -p -m 644 %{SOURCE1} %{buildroot}%{_sysconfdir}/ld.so.conf.d/
 
 popd # build
 
-%post libs
-/sbin/ldconfig
 
-%postun libs
-/sbin/ldconfig
+%ldconfig_scriptlets libs
+
 
 %files libs
 %defattr(0644,root,root,0755)
+%doc LICENCE
 %dir %{_libdir}/vc
-%attr(0755,-,-) %{_libdir}/vc/*.so
 %dir %{_libdir}/vc/plugins
+%attr(0755,-,-) %{_libdir}/vc/*.so
 %attr(0755,-,-) %{_libdir}/vc/plugins/*.so
 %{_sysconfdir}/ld.so.conf.d/raspberrypi-vc-libs.conf
-%doc LICENCE
 
 %files libs-devel
 %defattr(0644,root,root,0755)
@@ -141,24 +138,24 @@ popd # build
 %dir %{_libdir}/vc/pkgconfig
 %{_libdir}/pkgconfig/*.pc
 %{_libdir}/vc/pkgconfig/*.pc
-%doc LICENCE
+
 
 %files static
 %defattr(0644,root,root,0755)
 %dir %{_libdir}/vc
 %{_libdir}/vc/*.a
-%doc LICENCE
+
 
 %files utils
 %defattr(0644,root,root,0755)
 %attr(4755,root,root) %{_bindir}/*
 %attr(4755,root,root) %{_sbindir}/*
-%doc LICENCE
+
 
 %files demo-source
 %defattr(0644,root,root,0755)
 %{_datadir}/raspberrypi-vc-demo-source
-%doc LICENCE
+
 
 %changelog
 * Mon Mar 19 2018 Vaughan <devel at agrez dot net> - 20180319-1.eb3e6d7
