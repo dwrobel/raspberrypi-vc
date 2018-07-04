@@ -1,6 +1,6 @@
 # actually, the date is the date packaged, not the commit date
-%global commit_date     20180319
-%global commit_long     eb3e6d7b3d2ae585318c1c16055e3cecedceee4b
+%global commit_date     20180704
+%global commit_long     409dfcd90bae0a09b1b8c1f718a532728d26cde2
 %global commit_short    %(c=%{commit_long}; echo ${c:0:7})
 %global prefix          /opt/vc
 
@@ -166,6 +166,14 @@ popd # build
 
 
 %changelog
+* Wed Jul 04 2018 Vaughan <devel at agrez dot net> - 20180704-1.409dfcd
+- Sync to latest git revision: 409dfcd90bae0a09b1b8c1f718a532728d26cde2
+- Misc spec cleanups / refactoring
+- Add vchiq udev rule (Source2)
+
+* Mon Jun 18 2018 Vaughan <devel at agrez dot net> - 20180618-1.2448644
+- Sync to latest git revision: 2448644657e5fbfd82299416d218396ee1115ece
+
 * Mon Mar 19 2018 Vaughan <devel at agrez dot net> - 20180319-1.eb3e6d7
 - Sync to latest git revision: eb3e6d7b3d2ae585318c1c16055e3cecedceee4b
 
