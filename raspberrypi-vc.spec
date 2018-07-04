@@ -12,6 +12,7 @@ License:    Redistributable, with restrictions; see LICENSE.broadcom
 URL:        https://github.com/raspberrypi
 Source0:    %{url}/userland/archive/%{commit_long}.tar.gz#/raspberrypi-userland-%{commit_short}.tar.gz
 Source1:    raspberrypi-vc-libs.conf
+Source2:    10-vchiq.rules
 # Patch0 fixes up paths for relocation from /opt to system directories.
 Patch0:     raspberrypi-vc-demo-source-path-fixup.patch
 ExclusiveArch:  armv6hl armv7hl
@@ -26,6 +27,7 @@ Libraries, utilities and demos for the Raspberry Pi BCM283x SOC GPUs
 %package libs
 Summary:    Libraries for accessing the Raspberry Pi GPU
 Requires:   bcm283x-firmware >= 20150819
+Conflicts:  fedberry-local < 27-7
 
 %description libs
 Shared libraries for accessing the BCM283x VideoCore GPU on the RaspberryPi.
@@ -116,6 +118,10 @@ rm -rf %{buildroot}%{prefix}/share
 mkdir -p %{buildroot}%{_sysconfdir}/ld.so.conf.d
 install -D -p -m 644 %{SOURCE1} %{buildroot}%{_sysconfdir}/ld.so.conf.d/
 
+# Install udev rules
+mkdir -p %{buildroot}%{_udevrulesdir}
+install -D -p -m 0644 %{SOURCE2} %{buildroot}%{_udevrulesdir}/
+
 popd # build
 
 
@@ -130,6 +136,8 @@ popd # build
 %attr(0755,-,-) %{_libdir}/vc/*.so
 %attr(0755,-,-) %{_libdir}/vc/plugins/*.so
 %{_sysconfdir}/ld.so.conf.d/raspberrypi-vc-libs.conf
+%{_udevrulesdir}/*.rules
+
 
 %files libs-devel
 %defattr(0644,root,root,0755)
