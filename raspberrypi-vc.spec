@@ -1,6 +1,6 @@
 # actually, the date is the date packaged, not the commit date
-%global commit_date     20180704
-%global commit_long     409dfcd90bae0a09b1b8c1f718a532728d26cde2
+%global commit_date     20180801
+%global commit_long     f74ea7fdef9911904e269127443cd8a608abeacc
 %global commit_short    %(c=%{commit_long}; echo ${c:0:7})
 %global prefix          /opt/vc
 
