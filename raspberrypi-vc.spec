@@ -2,7 +2,6 @@
 %global commit_date     20180801
 %global commit_long     f74ea7fdef9911904e269127443cd8a608abeacc
 %global commit_short    %(c=%{commit_long}; echo ${c:0:7})
-%global prefix          /opt/vc
 
 Name:       raspberrypi-vc
 Version:    %{commit_date}
@@ -26,7 +25,7 @@ Libraries, utilities and demos for the Raspberry Pi BCM283x SOC GPUs
 
 %package libs
 Summary:    Libraries for accessing the Raspberry Pi GPU
-Requires:   bcm283x-firmware >= 20150819
+Requires:   bcm283x-firmware
 Conflicts:  fedberry-local < 27-7
 
 %description libs
@@ -75,94 +74,92 @@ Static versions of libraries for accessing the BCM283x VideoCore GPU on the Rasp
 %build
 mkdir build
 pushd build
-cmake -DCMAKE_BUILD_TYPE=ReleaseWithDebInfo -DCMAKE_C_FLAGS="%{optflags} -fgnu89-inline" ..
-make %{?_smp_mflags} all
+cmake -DCMAKE_BUILD_TYPE=Release -DVMCS_INSTALL_PREFIX=%{_usr} \
+-DCMAKE_C_FLAGS=%{optflags} ..
+%make_build
+popd
 
 
 %install
-rm -rf %{buildroot}
-
 pushd build
-make install DESTDIR=%{buildroot}
+%make_install DESTDIR=%{buildroot}
+popd
 
-# /opt/vc -> /usr
-mkdir -p %{buildroot}/usr
-mv %{buildroot}/%{prefix}/{bin,sbin} %{buildroot}/usr
+### libs
+mkdir -p %{buildroot}/%{_libdir}/vc
+mv %{buildroot}/%{_libdir}/{*.so,*.a} %{buildroot}/%{_libdir}/vc
+mv %{buildroot}/%{_libdir}/plugins %{buildroot}/%{_libdir}/vc
 
-for i in %{buildroot}/%{prefix}/lib/pkgconfig/*.pc; do
+### pkgconfig
+mv %{buildroot}/%{_libdir}/pkgconfig %{buildroot}/%{_libdir}/vc
+mkdir -p %{buildroot}/%{_datadir}/pkgconfig
+for i in %{buildroot}/%{_libdir}/vc/pkgconfig/*.pc; do
     sed -i "/^prefix=.*$/d" $i
     sed -i "/^exec_prefix=.*$/d" $i
     sed -i "s|^libdir=.*$|libdir=%{_libdir}/vc|" $i
     sed -i "s|^includedir=.*$|includedir=%{_includedir}/vc|" $i
+    pkgpc=$(echo $i|sed 's|%{buildroot}/%{_libdir}/vc/pkgconfig/||')
+    ln -s %{_libdir}/vc/pkgconfig/$pkgpc %{buildroot}/%{_datadir}/pkgconfig/$pkgpc
 done
 
-# files egl.pc glesv2.pc from raspberrypi-vc-libs-devel conflict with mesa-libEGL-devel
-mkdir -p %{buildroot}/%{_libdir}/vc/pkgconfig
-mv %{buildroot}/%{prefix}/lib/pkgconfig/egl.pc %{buildroot}/%{_libdir}/vc/pkgconfig
-mv %{buildroot}/%{prefix}/lib/pkgconfig/glesv2.pc %{buildroot}/%{_libdir}/vc/pkgconfig
-
-mv %{buildroot}/%{prefix}/lib/pkgconfig %{buildroot}/%{_libdir}
-mv %{buildroot}/%{prefix}/lib/* %{buildroot}/%{_libdir}/vc
-
+### devel
 mkdir -p %{buildroot}/%{_includedir}/vc
-mv %{buildroot}/%{prefix}/include/* %{buildroot}/%{_includedir}/vc
+shopt -s extglob
+mv %{buildroot}/%{_includedir}/!(vc) %{buildroot}/%{_includedir}/vc
+shopt -u extglob
 
-mkdir -p %{buildroot}/%{_datadir}/raspberrypi-vc-demo-source
-mv %{buildroot}/%{prefix}/src/hello_pi %{buildroot}/%{_datadir}/raspberrypi-vc-demo-source
+### demo source
+mkdir -p %{buildroot}/%{_usrsrc}/%{name}-demo-source
+mv %{buildroot}/%{_usrsrc}/hello_pi %{buildroot}/%{_usrsrc}/%{name}-demo-source
 
-# Remove sysvinit vcfiled
+### remove sysvinit vcfiled
 rm -rf %{buildroot}%{_sysconfdir}/init.d
-rm -rf %{buildroot}%{prefix}/share
+rm -rf %{buildroot}%{_datadir}/install
 
-# Install ldconfig conf
+### install ldconfig conf
 mkdir -p %{buildroot}%{_sysconfdir}/ld.so.conf.d
 install -D -p -m 644 %{SOURCE1} %{buildroot}%{_sysconfdir}/ld.so.conf.d/
 
-# Install udev rules
+### install udev rules
 mkdir -p %{buildroot}%{_udevrulesdir}
 install -D -p -m 0644 %{SOURCE2} %{buildroot}%{_udevrulesdir}/
 
-popd # build
 
 
 %ldconfig_scriptlets libs
 
 
 %files libs
-%defattr(0644,root,root,0755)
 %doc LICENCE
 %dir %{_libdir}/vc
-%dir %{_libdir}/vc/plugins
-%attr(0755,-,-) %{_libdir}/vc/*.so
-%attr(0755,-,-) %{_libdir}/vc/plugins/*.so
-%{_sysconfdir}/ld.so.conf.d/raspberrypi-vc-libs.conf
+%dir /opt/vc
+%{_libdir}/vc/*.so
+%{_libdir}/vc/plugins/*.so
+/opt/vc/lib
+%{_sysconfdir}/ld.so.conf.d/*.conf
 %{_udevrulesdir}/*.rules
 
 
 %files libs-devel
-%defattr(0644,root,root,0755)
-%{_includedir}/*
-%dir %{_libdir}/pkgconfig
-%dir %{_libdir}/vc/pkgconfig
-%{_libdir}/pkgconfig/*.pc
+%{_includedir}/vc/*
+%{_datadir}/pkgconfig/*.pc
 %{_libdir}/vc/pkgconfig/*.pc
+/opt/vc/include
 
 
 %files static
-%defattr(0644,root,root,0755)
-%dir %{_libdir}/vc
 %{_libdir}/vc/*.a
 
 
 %files utils
-%defattr(0644,root,root,0755)
-%attr(4755,root,root) %{_bindir}/*
-%attr(4755,root,root) %{_sbindir}/*
+%{_bindir}/*
+%{_sbindir}/*
 
 
 %files demo-source
-%defattr(0644,root,root,0755)
-%{_datadir}/raspberrypi-vc-demo-source
+%dir %{_usrsrc}/%{name}-demo-source
+%{_usrsrc}/%{name}-demo-source/*
+
 
 
 %changelog
