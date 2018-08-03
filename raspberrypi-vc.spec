@@ -124,6 +124,10 @@ install -D -p -m 644 %{SOURCE1} %{buildroot}%{_sysconfdir}/ld.so.conf.d/
 mkdir -p %{buildroot}%{_udevrulesdir}
 install -D -p -m 0644 %{SOURCE2} %{buildroot}%{_udevrulesdir}/
 
+### create compatibility links
+mkdir -p %{buildroot}/opt/vc
+ln -s %{_libdir}/vc %{buildroot}/opt/vc/lib
+ln -s %{_includedir}/vc %{buildroot}/opt/vc/include
 
 
 %ldconfig_scriptlets libs
