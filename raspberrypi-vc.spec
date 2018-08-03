@@ -167,6 +167,11 @@ ln -s %{_includedir}/vc %{buildroot}/opt/vc/include
 
 
 %changelog
+* Wed Aug 01 2018 Vaughan <devel at agrez dot net> - 20180801-1.f74ea7f
+- Refactor spec file
+- Add /opt/vc compatibility links
+- Sync to latest git revision: f74ea7fdef9911904e269127443cd8a608abeacc
+
 * Wed Jul 04 2018 Vaughan <devel at agrez dot net> - 20180704-1.409dfcd
 - Sync to latest git revision: 409dfcd90bae0a09b1b8c1f718a532728d26cde2
 - Misc spec cleanups / refactoring
