@@ -1,6 +1,6 @@
 # actually, the date is the date packaged, not the commit date
-%global commit_date     20180801
-%global commit_long     f74ea7fdef9911904e269127443cd8a608abeacc
+%global commit_date     20180827
+%global commit_long     4228b6c1168e92b2e7cfe93a8aab03e4e75869b8
 %global commit_short    %(c=%{commit_long}; echo ${c:0:7})
 
 Name:       raspberrypi-vc
@@ -167,6 +167,9 @@ ln -s %{_includedir}/vc %{buildroot}/opt/vc/include
 
 
 %changelog
+* Mon Aug 27 2018 Vaughan <devel at agrez dot net> - 20180827-1.4228b6c
+- Sync to latest git revision: 4228b6c1168e92b2e7cfe93a8aab03e4e75869b8
+
 * Wed Aug 01 2018 Vaughan <devel at agrez dot net> - 20180801-1.f74ea7f
 - Refactor spec file
 - Add /opt/vc compatibility links
