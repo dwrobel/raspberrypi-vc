@@ -18,6 +18,7 @@ ExclusiveArch:  armv6hl armv7hl
 
 BuildRequires:  cmake
 BuildRequires:  gcc-c++
+BuildRequires:  systemd
 
 %description
 Libraries, utilities and demos for the Raspberry Pi BCM283x SOC GPUs
