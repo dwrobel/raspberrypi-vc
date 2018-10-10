@@ -1,6 +1,6 @@
 # actually, the date is the date packaged, not the commit date
-%global commit_date     20180827
-%global commit_long     4228b6c1168e92b2e7cfe93a8aab03e4e75869b8
+%global commit_date     20181010
+%global commit_long     de4a7f2e3c391e2d3bc76af31864270e7802d9ac
 %global commit_short    %(c=%{commit_long}; echo ${c:0:7})
 
 Name:       raspberrypi-vc
@@ -168,6 +168,10 @@ ln -s %{_includedir}/vc %{buildroot}/opt/vc/include
 
 
 %changelog
+* Wed Oct 10 2018 Vaughan <devel at agrez dot net> - 20181010-1.de4a7f2
+- Sync to latest git revision: de4a7f2e3c391e2d3bc76af31864270e7802d9ac
+- Add systemd build requires
+
 * Mon Aug 27 2018 Vaughan <devel at agrez dot net> - 20180827-1.4228b6c
 - Sync to latest git revision: 4228b6c1168e92b2e7cfe93a8aab03e4e75869b8
 
