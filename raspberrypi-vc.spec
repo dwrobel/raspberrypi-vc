@@ -1,10 +1,8 @@
-# actually, the date is the date packaged, not the commit date
-%global commit_date     20181125
-%global commit_long     d574b51a60a075baefe863670466ee24e6c4256e
+%global commit_long     7cbfbd38d9824535164f93a1d32c81a33a00ca31
 %global commit_short    %(c=%{commit_long}; echo ${c:0:7})
 
 Name:       raspberrypi-vc
-Version:    %{commit_date}
+Version:    20181213
 Release:    1.%{commit_short}%{dist}
 Summary:    VideoCore GPU libraries, utilities and demos for Raspberry Pi
 License:    Redistributable, with restrictions; see LICENSE.broadcom
@@ -75,15 +73,18 @@ Static versions of libraries for accessing the BCM283x VideoCore GPU on the Rasp
 %build
 mkdir build
 pushd build
-cmake -DCMAKE_BUILD_TYPE=Release -DVMCS_INSTALL_PREFIX=%{_usr} \
--DCMAKE_C_FLAGS=%{optflags} ..
+%cmake \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DVMCS_INSTALL_PREFIX=%{_prefix} \
+        -DBUILD_SHARED_LIBS:BOOL=OFF \
+        ..
 %make_build
 popd
 
 
 %install
 pushd build
-%make_install DESTDIR=%{buildroot}
+%make_install
 popd
 
 ### libs
@@ -141,7 +142,7 @@ ln -s %{_includedir}/vc %{buildroot}/opt/vc/include
 %{_libdir}/vc/*.so
 %{_libdir}/vc/plugins/*.so
 /opt/vc/lib
-%{_sysconfdir}/ld.so.conf.d/*.conf
+%config %{_sysconfdir}/ld.so.conf.d/*.conf
 %{_udevrulesdir}/*.rules
 
 
@@ -166,8 +167,10 @@ ln -s %{_includedir}/vc %{buildroot}/opt/vc/include
 %{_usrsrc}/%{name}-demo-source/*
 
 
-
 %changelog
+* Thu Dec 13 2018 Vaughan <devel at agrez dot net> - 20181213-1.7cbfbd3
+- Sync to latest git revision: 7cbfbd38d9824535164f93a1d32c81a33a00ca31
+
 * Sun Nov 25 2018 Vaughan <devel at agrez dot net> - 20181125-1.d574b51
 - Sync to latest git revision: d574b51a60a075baefe863670466ee24e6c4256e
 
