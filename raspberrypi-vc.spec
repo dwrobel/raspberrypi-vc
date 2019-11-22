@@ -1,18 +1,15 @@
-%global commit_long     7cbfbd38d9824535164f93a1d32c81a33a00ca31
+%global commit_long     9238b8c5eb79590ccd0ef0284c8e49306219fcf0
 %global commit_short    %(c=%{commit_long}; echo ${c:0:7})
 
 Name:       raspberrypi-vc
-Version:    20181213
+Version:    20191118
 Release:    1.%{commit_short}%{dist}
 Summary:    VideoCore GPU libraries, utilities and demos for Raspberry Pi
 License:    Redistributable, with restrictions; see LICENSE.broadcom
 URL:        https://github.com/raspberrypi
 Source0:    %{url}/userland/archive/%{commit_long}.tar.gz#/raspberrypi-userland-%{commit_short}.tar.gz
-Source1:    raspberrypi-vc-libs.conf
-Source2:    10-vchiq.rules
-# Patch0 fixes up paths for relocation from /opt to system directories.
-Patch0:     raspberrypi-vc-demo-source-path-fixup.patch
-ExclusiveArch:  armv6hl armv7hl
+Source1:    10-vchiq.rules
+ExclusiveArch:  armv6hl armv7hl aarch64
 
 BuildRequires:  cmake
 BuildRequires:  gcc-c++
@@ -87,21 +84,19 @@ pushd build
 %make_install
 popd
 
-### libs
-mkdir -p %{buildroot}/%{_libdir}/vc
-mv %{buildroot}/%{_libdir}/{*.so,*.a} %{buildroot}/%{_libdir}/vc
-mv %{buildroot}/%{_libdir}/plugins %{buildroot}/%{_libdir}/vc
+
+### resolve conflicting libs
+pushd %{buildroot}/%{_libdir}/
+# duplicates
+rm -f libEGL.so libGLESv2.so
+# add proper prefix as for .so counterpart
+mv libEGL_static.a    libbrcmEGL.a
+mv libGLESv2_static.a libbrcmGLESv2.a
+popd
 
 ### pkgconfig
-mv %{buildroot}/%{_libdir}/pkgconfig %{buildroot}/%{_libdir}/vc
-mkdir -p %{buildroot}/%{_datadir}/pkgconfig
-for i in %{buildroot}/%{_libdir}/vc/pkgconfig/*.pc; do
-    sed -i "/^prefix=.*$/d" $i
-    sed -i "/^exec_prefix=.*$/d" $i
-    sed -i "s|^libdir=.*$|libdir=%{_libdir}/vc|" $i
+for i in %{buildroot}/%{_libdir}/pkgconfig/*.pc; do
     sed -i "s|^includedir=.*$|includedir=%{_includedir}/vc|" $i
-    pkgpc=$(echo $i|sed 's|%{buildroot}/%{_libdir}/vc/pkgconfig/||')
-    ln -s %{_libdir}/vc/pkgconfig/$pkgpc %{buildroot}/%{_datadir}/pkgconfig/$pkgpc
 done
 
 ### devel
@@ -118,48 +113,30 @@ mv %{buildroot}/%{_usrsrc}/hello_pi %{buildroot}/%{_usrsrc}/%{name}-demo-source
 rm -rf %{buildroot}%{_sysconfdir}/init.d
 rm -rf %{buildroot}%{_datadir}/install
 
-### install ldconfig conf
-mkdir -p %{buildroot}%{_sysconfdir}/ld.so.conf.d
-install -D -p -m 644 %{SOURCE1} %{buildroot}%{_sysconfdir}/ld.so.conf.d/
-
 ### install udev rules
 mkdir -p %{buildroot}%{_udevrulesdir}
-install -D -p -m 0644 %{SOURCE2} %{buildroot}%{_udevrulesdir}/
-
-### create compatibility links
-mkdir -p %{buildroot}/opt/vc
-ln -s %{_libdir}/vc %{buildroot}/opt/vc/lib
-ln -s %{_includedir}/vc %{buildroot}/opt/vc/include
-
-
-%ldconfig_scriptlets libs
+install -D -p -m 0644 %{SOURCE1} %{buildroot}%{_udevrulesdir}/
 
 
 %files libs
 %doc LICENCE
-%dir %{_libdir}/vc
-%dir /opt/vc
-%{_libdir}/vc/*.so
-%{_libdir}/vc/plugins/*.so
-/opt/vc/lib
-%config %{_sysconfdir}/ld.so.conf.d/*.conf
+%dir %{_libdir}/plugins
+%{_libdir}/*.so
+%{_libdir}/plugins/*.so
 %{_udevrulesdir}/*.rules
 
 
 %files libs-devel
 %{_includedir}/vc/*
-%{_datadir}/pkgconfig/*.pc
-%{_libdir}/vc/pkgconfig/*.pc
-/opt/vc/include
+%{_libdir}/pkgconfig/*.pc
 
 
 %files static
-%{_libdir}/vc/*.a
+%{_libdir}/*.a
 
 
 %files utils
 %{_bindir}/*
-%{_sbindir}/*
 
 
 %files demo-source
@@ -168,6 +145,10 @@ ln -s %{_includedir}/vc %{buildroot}/opt/vc/include
 
 
 %changelog
+* Fri Nov 22 2019 Damian Wrobel <dwrobel@ertelnet.rybnik.pl> - 20191118-1.9238b8c
+- Sync to latest git revision: 9238b8c5eb79590ccd0ef0284c8e49306219fcf0
+- Clean up install section
+
 * Thu Dec 13 2018 Vaughan <devel at agrez dot net> - 20181213-1.7cbfbd3
 - Sync to latest git revision: 7cbfbd38d9824535164f93a1d32c81a33a00ca31
 
