@@ -1,8 +1,8 @@
-%global commit_long     7cbfbd38d9824535164f93a1d32c81a33a00ca31
+%global commit_long     42ec119e03eb8dffc7c83e2ac0e665e333abbef6
 %global commit_short    %(c=%{commit_long}; echo ${c:0:7})
 
 Name:       raspberrypi-vc
-Version:    20181213
+Version:    20191217
 Release:    1.%{commit_short}%{dist}
 Summary:    VideoCore GPU libraries, utilities and demos for Raspberry Pi
 License:    Redistributable, with restrictions; see LICENSE.broadcom
@@ -11,12 +11,19 @@ Source0:    %{url}/userland/archive/%{commit_long}.tar.gz#/raspberrypi-userland-
 Source1:    raspberrypi-vc-libs.conf
 Source2:    10-vchiq.rules
 # Patch0 fixes up paths for relocation from /opt to system directories.
-Patch0:     raspberrypi-vc-demo-source-path-fixup.patch
+Patch0:     %{name}-demo-source-path-fixup.patch
+# Upstreamed as: https://github.com/raspberrypi/userland/pull/606
+Patch1:     https://github.com/raspberrypi/userland/pull/606.patch#/%{name}-libfdt-error.patch
+# Fix for cmake vmcs_host error (fixes #603)
+# Upstreamed as: https://github.com/raspberrypi/userland/pull/605
+Patch2:     https://patch-diff.githubusercontent.com/raw/raspberrypi/userland/pull/605.patch#/%{name}-cmake-error.patch
+
 ExclusiveArch:  armv6hl armv7hl
 
 BuildRequires:  cmake
 BuildRequires:  gcc-c++
 BuildRequires:  systemd
+BuildRequires:  /usr/bin/git
 
 %description
 Libraries, utilities and demos for the Raspberry Pi BCM283x SOC GPUs
@@ -67,11 +74,11 @@ Static versions of libraries for accessing the BCM283x VideoCore GPU on the Rasp
 
 
 %prep
-%autosetup -p1 -n userland-%{commit_long}
+%autosetup -S git -p1 -n userland-%{commit_long}
 
 
 %build
-mkdir build
+mkdir -p build
 pushd build
 %cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -159,7 +166,6 @@ ln -s %{_includedir}/vc %{buildroot}/opt/vc/include
 
 %files utils
 %{_bindir}/*
-%{_sbindir}/*
 
 
 %files demo-source
@@ -168,6 +174,11 @@ ln -s %{_includedir}/vc %{buildroot}/opt/vc/include
 
 
 %changelog
+* Fri Dec 27 2019 Damian Wrobel <dwrobel@ertelnet.rybnik.pl> - 20191217-1.42ec119
+- Sync to latest git revision: 42ec119e03eb8dffc7c83e2ac0e665e333abbef6
+- Rebase raspberrypi-vc-vc-demo-source-path-fixup.patch
+- Compilation fixes for Fedora 31.
+
 * Thu Dec 13 2018 Vaughan <devel at agrez dot net> - 20181213-1.7cbfbd3
 - Sync to latest git revision: 7cbfbd38d9824535164f93a1d32c81a33a00ca31
 
